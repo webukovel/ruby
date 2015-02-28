@@ -1,4 +1,6 @@
-bukovel_graph = [
+require './lib/graph'
+
+BUKOVEL_GRAPH = [
 [0, 4,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
 [2, 0,  2,  0,  0,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
 [0, 4,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,	0],
@@ -18,5 +20,16 @@ bukovel_graph = [
 [0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	5,	0,	0,	0,	3],
 [0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	6,	0]]
 
-def route_from strat_point
+def route_from start_point
+  verteces = convert_to_verteces_list(BUKOVEL_GRAPH)
+  path, dist = Graph.new(verteces).shortest_path(start_point, 6)
+  {time: dist, checkpoints: path}
+end
+
+def convert_to_verteces_list(graph)
+  verteces = []
+  graph.each_with_index do |line, a|
+     line.each_with_index {|len,b| verteces.push([a,b,len]) if len > 0 }
+  end
+  verteces
 end
