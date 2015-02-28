@@ -25,19 +25,10 @@ def to_points(way)
   end.compact
 end
 
-def all_in_end?
-  @ways.each{|way| return false if way.last != END_POINT}
-  true
-end
-
 def recarculate_ways
   @ways = @ways.inject([]) do |new_ways, way|
-    if way.last == END_POINT
-      new_ways << way.dup
-    else
-      to_points(way).each{|tp| new_ways << (way.dup << tp)}
-    end
-    new_ways
+    next new_ways << way.dup if way.last == END_POINT
+    new_ways.concat(to_points(way).map{|tp| way.dup << tp})
   end
 end
 
@@ -45,7 +36,6 @@ def calculate_times
   @times = @ways.inject([]) do |res, way|
     res << (0...way.count-1).inject(0) do |sum, i|
       sum += BG[way[i]][way[i+1]]
-      sum
     end
   end
 end
@@ -53,11 +43,9 @@ end
 def route_from(strat_point)
   @ways = [[strat_point]]
 
-  recarculate_ways until all_in_end?
+  recarculate_ways until @ways.map(&:last).uniq == [END_POINT]
   calculate_times
 
-  {
-    time: @times.min,
-    checkpoints: @ways[@times.rindex(@times.min)]
-  }
+  { time: @times.min,
+    checkpoints: @ways[@times.rindex(@times.min)] }
 end
