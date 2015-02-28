@@ -1,4 +1,8 @@
-bukovel_graph = [
+require './lib/graph'
+require './lib/node'
+require './lib/edge'
+
+BUKOVEL_GRAPH = [
 [0, 4,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
 [2, 0,  2,  0,  0,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
 [0, 4,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,	0],
@@ -18,5 +22,7 @@ bukovel_graph = [
 [0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	5,	0,	0,	0,	3],
 [0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	6,	0]]
 
-def route_from strat_point
+def route_from(start_point)
+  graph = Graph.new(BUKOVEL_GRAPH)
+  graph.min_path(start_point, 6)
 end
