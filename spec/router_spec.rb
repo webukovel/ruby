@@ -27,7 +27,7 @@ describe '#route_from' do
   end
 
   it 'should build shortest route from point 7' do
-    expect(route_from(7)[:time]).to eq 20
+    expect(route_from(7)[:time]).to eq 11
     expect(route_from(7)[:checkpoints]).to eq [7,12,11,2,6]
   end
 end
